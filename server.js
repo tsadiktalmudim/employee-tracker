@@ -2,12 +2,14 @@ const db = require("./config/connection");
 const inquirer = require("inquirer");
 const cTable = require("console.table");
 
+// utilizing the connection
 db.connect(function (err) {
   if (err) throw err;
   console.log("Connected to Database!");
   menu();
 });
 
+// Creating menu function for starting the entire inquirer prompt
 const menu = () => {
   inquirer
     .prompt([
@@ -54,6 +56,7 @@ const menu = () => {
     });
 };
 
+// Creating the View Department Table function to be called in the inquirer prompt when "View Departments" is chosen
 const viewDepartment = () => {
   db.promise()
     .query("SELECT * FROM department")
@@ -63,6 +66,7 @@ const viewDepartment = () => {
     });
 };
 
+// Creating the View Role Table function to be called in the inquirer prompt when "View Roles" is chosen
 const viewRole = () => {
   db.promise()
     .query("SELECT * FROM role")
@@ -72,8 +76,10 @@ const viewRole = () => {
     });
 };
 
+// Creating the View Employee Table function to be called in the inquirer prompt when "View Employees" is chosen
 const viewEmployee = () => {
   db.promise()
+  // utilizing template literal to be able to order the query and name the fields as desired
     .query(
       `SELECT 
     employee.id,
@@ -94,6 +100,7 @@ const viewEmployee = () => {
     });
 };
 
+// Creating the Add Department function to be called in the inquirer prompt when "Add New Department" is chosen
 const addDepartment = () => {
   inquirer
     .prompt([
@@ -121,6 +128,7 @@ const addDepartment = () => {
     .catch(console.log);
 };
 
+// Creating the Add Role function to be called in the inquirer prompt when "Add New Role" is chosen
 const addRole = () => {
   db.promise()
     .query("SELECT * FROM department")
@@ -145,8 +153,8 @@ const addRole = () => {
             type: "input",
             name: "salary",
             message: "What is the salary for this role?",
-            validate: (sal) => {
-              if (sal) {
+            validate: (foo) => {
+              if (foo) {
                 return true;
               } else {
                 console.log("Please enter a salary for the role");
@@ -175,6 +183,7 @@ const addRole = () => {
     .catch(console.log);
 };
 
+// Creating the Add Employee function to be called in the inquirer prompt when "Add Employee" is chosen
 const addEmployee = () => {
   db.promise()
     .query("SELECT * FROM role")
@@ -187,11 +196,11 @@ const addEmployee = () => {
             type: "input",
             name: "first_name",
             message: "What is the employee's first name?",
-            validate: (name) => {
-              if (name) {
+            validate: (foo) => {
+              if (foo) {
                 return true;
               } else {
-                console.log("Please enter the employee first name!");
+                console.log("Please enter the employee's first name");
                 return false;
               }
             },
@@ -200,8 +209,8 @@ const addEmployee = () => {
             type: "input",
             name: "last_name",
             message: "What is the employee's last name?",
-            validate: (name) => {
-              if (name) {
+            validate: (foo) => {
+              if (foo) {
                 return true;
               } else {
                 console.log("Please enter the employee's last name");
@@ -258,6 +267,7 @@ const addEmployee = () => {
     .catch(console.log);
 };
 
+// Creating the Update Employee function to be called in the inquirer prompt when "Update Existing Employee" is chosen
 const updateEmployee = () => {
   db.promise()
     .query("SELECT * FROM employee")
