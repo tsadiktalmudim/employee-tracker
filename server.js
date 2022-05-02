@@ -131,7 +131,7 @@ const addRole = () => {
           {
             type: "input",
             name: "title",
-            message: "What is the employee's role?",
+            message: "What is the new role?",
             validate: (title) => {
               if (title) {
                 return true;
@@ -144,12 +144,12 @@ const addRole = () => {
           {
             type: "input",
             name: "salary",
-            message: "What is the salary of this employee?",
+            message: "What is the salary for this role?",
             validate: (sal) => {
               if (sal) {
                 return true;
               } else {
-                console.log("Please enter a salary for your employee!");
+                console.log("Please enter a salary for the role");
                 return false;
               }
             },
